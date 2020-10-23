@@ -22,6 +22,9 @@ const jwtMW = exjwt({
     algorithms: ['HS256']
 });
 
+
+
+
 let users = [
     {
         id: 1,
@@ -59,9 +62,11 @@ app.post('/api/login', (req, res) => {
 });
 
 app.get('/api/dashboard', jwtMW, (req, res) => {
+    
     res.json({
         success: true,
         myContent: 'Secret content that only logged in a people can see.'
+        
     });
 });
 
@@ -71,6 +76,14 @@ app.get('/api/prices', jwtMW, (req, res) => {
         myContent: 'This is the price $3.99'
     });
 });
+
+app.get('/api/settings', jwtMW, (req, res) => {
+    res.json({
+        success: true,
+        myContent: 'Settings menu for logged in people'
+    });
+});
+
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
